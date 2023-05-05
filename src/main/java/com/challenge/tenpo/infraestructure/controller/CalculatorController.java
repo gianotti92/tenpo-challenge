@@ -1,4 +1,4 @@
-package com.challenge.tenpo.infraestructure;
+package com.challenge.tenpo.infraestructure.controller;
 
 
 import org.springframework.web.bind.annotation.RestController;

@@ -1,4 +1,4 @@
-package com.challenge.tenpo.domain.client;
+package com.challenge.tenpo.infraestructure.client;
 
 import com.challenge.tenpo.domain.model.Addition;
 

@@ -1,22 +1,14 @@
 package com.challenge.tenpo.domain.service;
 
-import com.challenge.tenpo.domain.client.PercentageClient;
 import com.challenge.tenpo.domain.model.Addition;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdditionService {
+public class AdditionDomainService {
 
     public static final int ONE_HUNDRED = 100;
-    private PercentageClient percentageClient;
-
-    public AdditionService(PercentageClient percentageClient) {
-        this.percentageClient = percentageClient;
-    }
-
-    public Addition calculateAddition(Addition addition) {
-        var percentage = percentageClient.obtainPercentage(addition);
-        
+    
+    public Addition calculateAddition(Addition addition, Integer percentage) {
         return Addition.builder()
                 .result(calculateResult(addition, percentage))
                 .build();
