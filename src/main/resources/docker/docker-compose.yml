@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    container_name: my-postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - tenpo-db:/var/lib/postgresql/data
+
+volumes:
+  tenpo-db:
