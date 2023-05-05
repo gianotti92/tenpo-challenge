@@ -2,9 +2,7 @@ package com.challenge.tenpo.application.service;
 
 import com.challenge.tenpo.domain.model.Addition;
 import com.challenge.tenpo.domain.service.AdditionDomainService;
-import com.challenge.tenpo.infraestructure.client.PercentageClient;
-import com.challenge.tenpo.infraestructure.service.AdditionService;
-import org.junit.jupiter.api.Assertions;
+import com.challenge.tenpo.application.client.PercentageClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
