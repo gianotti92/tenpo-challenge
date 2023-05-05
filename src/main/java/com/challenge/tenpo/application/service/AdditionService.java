@@ -1,23 +1,38 @@
 package com.challenge.tenpo.application.service;
 
-import com.challenge.tenpo.domain.model.Addition;
-import com.challenge.tenpo.domain.service.AdditionDomainService;
+import java.util.concurrent.CompletableFuture;
+
 import com.challenge.tenpo.application.client.PercentageClient;
+import com.challenge.tenpo.domain.model.Addition;
+import com.challenge.tenpo.domain.repository.AdditionRepository;
+import com.challenge.tenpo.domain.service.AdditionDomainService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdditionService {
-    
-    private PercentageClient percentageClient;
-    private AdditionDomainService additionDomainService;
 
-    public AdditionService(PercentageClient percentageClient, AdditionDomainService additionDomainService) {
-        this.percentageClient = percentageClient;
-        this.additionDomainService = additionDomainService;
-    }
+  private PercentageClient percentageClient;
 
-    public Addition calculateAddition(Addition addition) {
-        var percentage = percentageClient.obtainPercentage(addition);
-        return additionDomainService.calculateAddition(addition, percentage);
-    }
+  private AdditionDomainService additionDomainService;
+
+  private AdditionRepository additionRepository;
+
+  public AdditionService(PercentageClient percentageClient, AdditionDomainService additionDomainService,
+      AdditionRepository additionRepository) {
+    this.percentageClient = percentageClient;
+    this.additionDomainService = additionDomainService;
+    this.additionRepository = additionRepository;
+  }
+
+  public Addition calculateAddition(Addition addition) {
+    var percentage = percentageClient.obtainPercentage(addition);
+    var result = additionDomainService.calculateAddition(addition, percentage);
+    this.asyncSave(result);
+    return result;
+  }
+
+  private void asyncSave(Addition addition) {
+    var additionPersisted = additionRepository.save(addition);
+    CompletableFuture.completedFuture(additionPersisted).join();
+  }
 }
