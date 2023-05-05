@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class Addition {
     
+    private Long id;
     private Double firstAddend;
     private Double secondAddend;
     private Integer percentage;
