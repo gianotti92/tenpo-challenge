@@ -4,6 +4,7 @@ import com.challenge.tenpo.domain.model.Addition;
 import com.challenge.tenpo.infrastructure.persistence.dto.AdditionPersistenceDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 
 @Mapper
