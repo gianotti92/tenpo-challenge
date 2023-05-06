@@ -1,24 +1,22 @@
-package com.challenge.tenpo.infrastructure.persistence.mapper;
+package com.challenge.tenpo.infrastructure.controller.mapper;
 
 import com.challenge.tenpo.domain.model.Addition;
-import com.challenge.tenpo.infrastructure.persistence.dto.AdditionPersistenceDto;
+import com.challenge.tenpo.infrastructure.controller.dto.AdditionDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-
 @Mapper
-public interface AdditionPersistenceMapper {
+public interface AdditionControllerMapper {
     @Mapping(target = "firstAddend", source = "firstAddend")
     @Mapping(target = "secondAddend", source = "secondAddend")
     @Mapping(target = "percentage", source = "percentage")
     @Mapping(target = "result", source = "result")
-    @Mapping(target = "created", expression = "java(java.time.LocalDateTime.now())")
-    AdditionPersistenceDto map(Addition addition);
-
+    AdditionDto map(Addition addition);
+    
     @Mapping(target = "firstAddend", source = "firstAddend")
     @Mapping(target = "secondAddend", source = "secondAddend")
     @Mapping(target = "percentage", source = "percentage")
     @Mapping(target = "result", source = "result")
     @Mapping(target = "id", source = "id")
-    Addition map(AdditionPersistenceDto dto);
+    Addition map(AdditionDto dto);
 }

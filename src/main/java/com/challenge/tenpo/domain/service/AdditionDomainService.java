@@ -9,10 +9,10 @@ public class AdditionDomainService {
     public static final int ONE_HUNDRED = 100;
     
     public Addition calculateAddition(Addition addition, Integer percentage) {
-        return Addition.builder()
+        return addition.toBuilder()
+                .percentage(percentage)
                 .result(calculateResult(addition, percentage))
                 .build();
-        
     }
 
     private Double calculateResult(Addition addition, Integer percentage) {
