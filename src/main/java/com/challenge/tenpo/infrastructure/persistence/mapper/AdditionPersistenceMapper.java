@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper()
+@Mapper
 public interface AdditionPersistenceMapper {
     @Mapping(target = "firstAddend", source = "firstAddend")
     @Mapping(target = "secondAddend", source = "secondAddend")
