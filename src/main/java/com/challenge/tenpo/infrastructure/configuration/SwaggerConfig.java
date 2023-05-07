@@ -13,11 +13,9 @@ public class SwaggerConfig {
   public OpenAPI customOpenAPI() {
     return new OpenAPI()
             .info(new Info()
-                    .title("SACAViX Spring Boot 3 API -------")
-                    .version("0.11")
-                    .description("Sample app Spring Boot 3 with Swagger")
-                    .termsOfService("http://swagger.io/terms/")
-                    .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+                    .title("Addition Api")
+                    .version("1.0.0")
+                    .description("Api that allow us persist some addition and search historical additions"));
   }
   
 }
