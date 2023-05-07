@@ -1,14 +1,13 @@
 package com.challenge.tenpo.application.service;
 
-import java.time.LocalDateTime;
-import java.util.concurrent.CompletableFuture;
-
 import com.challenge.tenpo.application.client.PercentageClient;
 import com.challenge.tenpo.domain.model.Addition;
-import com.challenge.tenpo.domain.repository.AdditionRepository;
 import com.challenge.tenpo.domain.service.AdditionDomainService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AdditionService {
@@ -16,14 +15,11 @@ public class AdditionService {
   private PercentageClient percentageClient;
 
   private AdditionDomainService additionDomainService;
-
-  private AdditionRepository additionRepository;
-
-  public AdditionService(PercentageClient percentageClient, AdditionDomainService additionDomainService,
-      AdditionRepository additionRepository) {
+  
+  public AdditionService(PercentageClient percentageClient,
+                         AdditionDomainService additionDomainService) {
     this.percentageClient = percentageClient;
     this.additionDomainService = additionDomainService;
-    this.additionRepository = additionRepository;
   }
 
   @Transactional
@@ -33,9 +29,13 @@ public class AdditionService {
     this.asyncSave(result);
     return result;
   }
+  
+  public List<Addition> getAdditions(Integer page, Integer size) {
+    return additionDomainService.findAll(page, size);
+  }
 
   private void asyncSave(Addition addition) {
-    var additionPersisted = additionRepository.save(addition);
+    var additionPersisted = additionDomainService.save(addition);
     CompletableFuture.completedFuture(additionPersisted).join();
   }
 }
