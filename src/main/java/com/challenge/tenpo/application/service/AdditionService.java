@@ -1,8 +1,10 @@
 package com.challenge.tenpo.application.service;
 
-import com.challenge.tenpo.application.client.PercentageClient;
+import com.challenge.tenpo.domain.client.PercentageClient;
 import com.challenge.tenpo.domain.model.Addition;
+import com.challenge.tenpo.domain.model.ExternalCall;
 import com.challenge.tenpo.domain.service.AdditionDomainService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -23,19 +25,18 @@ public class AdditionService {
   }
 
   @Transactional
-  public Addition calculateAddition(Addition addition) {
-    var percentage = percentageClient.obtainPercentage(addition);
-    var result = additionDomainService.calculateAddition(addition, percentage);
-    this.asyncSave(result);
-    return result;
+  public Addition calculateAddition(Addition addition) throws JsonProcessingException {
+    var externalCall = percentageClient.getExternalCall(addition);
+    this.asyncSave(externalCall);
+    return null;
   }
   
-  public List<Addition> getAdditions(Integer page, Integer size) {
+  public List<ExternalCall> getAdditions(Integer page, Integer size) {
     return additionDomainService.findAll(page, size);
   }
 
-  private void asyncSave(Addition addition) {
-    var additionPersisted = additionDomainService.save(addition);
+  private void asyncSave(ExternalCall externalCall) {
+    var additionPersisted = additionDomainService.save(externalCall);
     CompletableFuture.completedFuture(additionPersisted).join();
   }
 }

@@ -2,7 +2,9 @@ package com.challenge.tenpo.infrastructure.controller;
 
 import com.challenge.tenpo.application.service.AdditionService;
 import com.challenge.tenpo.infrastructure.controller.dto.AdditionDto;
+import com.challenge.tenpo.infrastructure.controller.dto.ExternalCallDto;
 import com.challenge.tenpo.infrastructure.controller.mapper.AdditionControllerMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,15 +30,15 @@ public class CalculatorController {
   }
 
   @PostMapping
-  public ResponseEntity<AdditionDto> create(@RequestBody AdditionDto additionDto) {
+  public ResponseEntity<AdditionDto> create(@RequestBody AdditionDto additionDto) throws JsonProcessingException {
     var addition = additionControllerMapper.map(additionDto);
-    additionControllerMapper.map(additionService.calculateAddition(addition));
+    additionService.calculateAddition(addition);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping(params = { "page", "size" })
-  public ResponseEntity<List<AdditionDto>> get(@RequestParam("page") Integer page,
-                                               @RequestParam("size") Integer size) {
+  public ResponseEntity<List<ExternalCallDto>> get(@RequestParam("page") Integer page,
+                                                   @RequestParam("size") Integer size) {
     var response = additionService.getAdditions(page, size).stream()
             .map(additionControllerMapper::map)
             .collect(Collectors.toList());

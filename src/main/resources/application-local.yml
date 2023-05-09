@@ -4,3 +4,6 @@ spring:
     username: ${db.user}
     password: ${db.password}
     driver-class-name: org.postgresql.Driver
+
+rest-client:
+  base-url: ${base.url}

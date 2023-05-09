@@ -1,11 +1,10 @@
-create table addition
+create table tenpodb.external_call
 (
-    id             serial
-        constraint addition_pk
+    id serial
+        constraint external_call_pk
             primary key,
-    first_addend  numeric not null,
-    second_addend numeric not null,
-    percentage     integer not null,
-    result         numeric not null,
-    created        date    not null
+    result varchar(20),
+    http_code int not null,
+    created date not null
 );
+
