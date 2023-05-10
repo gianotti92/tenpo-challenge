@@ -16,6 +16,6 @@ public interface ExternalCallPersistenceMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "result", source = "result")
     @Mapping(target = "httpCode", source = "httpCode")
-    @Mapping(target = "created", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "created", source = "created")
     ExternalCall map(ExternalCallPersistenceDto dto);
 }

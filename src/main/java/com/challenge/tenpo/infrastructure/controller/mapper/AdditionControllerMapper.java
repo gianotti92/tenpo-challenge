@@ -12,7 +12,7 @@ public interface AdditionControllerMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "result", source = "result")
     @Mapping(target = "httpCode", source = "httpCode")
-    @Mapping(target = "created", source = "created")
+    @Mapping(target = "created", expression = "java(externalCall.getCreated().toString())")
     ExternalCallDto map(ExternalCall externalCall);
     
     @Mapping(target = "firstAddend", source = "firstAddend")

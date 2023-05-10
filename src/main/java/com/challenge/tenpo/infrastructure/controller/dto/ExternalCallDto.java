@@ -15,5 +15,5 @@ public class ExternalCallDto {
     private Long id;
     private String result;
     private Integer httpCode;
-    private LocalDateTime created;
+    private String created;
 }
