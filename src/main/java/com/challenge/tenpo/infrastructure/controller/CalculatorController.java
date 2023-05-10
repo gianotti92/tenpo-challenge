@@ -47,7 +47,7 @@ public class CalculatorController {
   @PostMapping
   public ResponseEntity<AdditionDto> create(@RequestBody AdditionDto additionDto) throws JsonProcessingException {
     if (bucket.tryConsume(1)) {
-      log.info("starting CalculatorController.create with request: {}", additionDto);
+      log.info("Starting CalculatorController.create with request: {}", additionDto);
       var addition = additionControllerMapper.map(additionDto);
       additionService.calculateAddition(addition);
       return ResponseEntity.ok().build();
@@ -60,7 +60,7 @@ public class CalculatorController {
   @GetMapping(params = { "page", "size" })
   public ResponseEntity<List<ExternalCallDto>> get(@RequestParam("page") Integer page,
                                                    @RequestParam("size") Integer size) {
-    log.info("starting CalculatorController.get with page: {} and size: {}", page, size);
+    log.info("Starting CalculatorController.get with page: {} and size: {}", page, size);
     if (bucket.tryConsume(1)) {
       var response = additionService.getAdditions(page, size).stream()
               .map(additionControllerMapper::map)

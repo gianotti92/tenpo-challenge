@@ -2,7 +2,7 @@ package com.challenge.tenpo.application.service;
 
 import com.challenge.tenpo.domain.client.PercentageClient;
 import com.challenge.tenpo.domain.model.Addition;
-import com.challenge.tenpo.domain.repository.ExternalCallRepository;
+import com.challenge.tenpo.domain.model.ExternalCall;
 import com.challenge.tenpo.domain.service.AdditionDomainService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +16,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AdditionServiceTest {
-
-    private static final Integer SOME_VALID_PERCENTAGE = 10;
+    
     @InjectMocks
     private AdditionService additionService;
     @Mock
@@ -26,27 +25,20 @@ public class AdditionServiceTest {
     private AdditionDomainService additionDomainService;
     
     @Mock
-    private ExternalCallRepository additionRepository;
+    private ExternalCall mockExternalCall;
     
     @Mock
-    private Addition addition;
+    private Addition mockAddition;
     
 
     @Test
-    public void given_valid_addition_and_valid_percentage_when_calculate_then_response_is_ok() {
-        /*when(additionRepository.save(addition)).thenReturn(addition);
-        when(additionDomainService.calculateAddition(addition, SOME_VALID_PERCENTAGE)).thenReturn(addition);
-
-        additionService.calculateAddition(addition);
-
-        verify(percentageClient).getExternalCall(addition);
-        verify(additionDomainService).calculateAddition(addition, SOME_VALID_PERCENTAGE);
-        verify(additionRepository).save(addition);
-        verifyNoMoreInteractions(percentageClient);
-        verifyNoMoreInteractions(additionDomainService);
-        verifyNoMoreInteractions(additionRepository);*/
+    public void given_valid_addition_when_calculate_then_addition_domain_service_will_be_called_ok() {
+        when(percentageClient.getExternalCall(mockAddition)).thenReturn(mockExternalCall);
+        when(additionDomainService.save(mockExternalCall)).thenReturn(mockExternalCall);
         
+        additionService.calculateAddition(mockAddition);
+        
+        verify(additionDomainService).save(mockExternalCall);
+        verifyNoMoreInteractions(additionDomainService);
     }
-    
-    
 }
