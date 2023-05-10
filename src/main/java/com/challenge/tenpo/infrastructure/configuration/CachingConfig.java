@@ -1,6 +1,7 @@
 package com.challenge.tenpo.infrastructure.configuration;
 
 import com.challenge.tenpo.infrastructure.client.PercentageRestResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Configuration
 @EnableScheduling
+@Slf4j
 public class CachingConfig {
     
     @Bean
@@ -25,6 +27,7 @@ public class CachingConfig {
     @Scheduled(fixedRate = 1800000) //every 30min
     //@Scheduled(fixedRate = 60000) //every 1min
     public void resetMyBean() {
+        log.warn("Starting clear map cache");
         cacheMap().clear();
     }
     

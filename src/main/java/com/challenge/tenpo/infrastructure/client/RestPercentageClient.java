@@ -6,6 +6,7 @@ import com.challenge.tenpo.domain.model.ExternalCall;
 import com.challenge.tenpo.infrastructure.exception.RestClientException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
+@Slf4j
 @Component
 public class RestPercentageClient implements PercentageClient {
     
@@ -49,6 +51,7 @@ public class RestPercentageClient implements PercentageClient {
     
     @SneakyThrows
     private ExternalCall getCachedResult(PercentageRestResponseDto percentageRestResponseDto) {
+        log.info("External data already cached for request: {}", percentageRestResponseDto);
         return ExternalCall.builder()
                 .result(objectMapper.writeValueAsString(percentageRestResponseDto.getResult()).replace("\\", ""))
                 .httpCode(percentageRestResponseDto.getStatus())
@@ -57,6 +60,7 @@ public class RestPercentageClient implements PercentageClient {
 
     @SneakyThrows
     private ExternalCall getFromExternalClient(Addition addition) {
+        log.info("External data not exists, start searching for addition: {}", addition);
         var url = String.format(StringUtils.join(baseUrl, URL), addition.getFirstAddend(), addition.getSecondAddend());
        
         ResponseEntity<PercentageRestResponseDto> response = null;
@@ -65,7 +69,7 @@ public class RestPercentageClient implements PercentageClient {
             response = restTemplate.exchange(url, HttpMethod.GET, null,
                     PercentageRestResponseDto.class);
         }catch (Exception e) {
-
+            log.info("External data error consuming, persisting request with error: {}", e.getMessage());
             var percentageRestResponseDto = PercentageRestResponseDto.builder()
                     .status(HttpStatus.NOT_FOUND.value())
                     .result(objectMapper.writeValueAsString(e.getMessage()))
@@ -79,21 +83,19 @@ public class RestPercentageClient implements PercentageClient {
         }
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-
+            log.info("Consuming external http status id {} for request: {}", response.getStatusCode().value(), addition);
             var percentageRestResponseDto = PercentageRestResponseDto.builder()
                     .status(response.getStatusCode().value())
                     .result(objectMapper.writeValueAsString(new RestClientException(String.format("Error while consuming percentage client, for status code %s",
                             response.getStatusCode())).getMessage().substring(0, 99)))
                     .build();
 
-            
-
             return ExternalCall.builder()
                     .result(objectMapper.writeValueAsString(percentageRestResponseDto))
                     .httpCode(response.getStatusCode().value())
                     .build();
         } else {
-
+            log.info("Consuming external http status is OK  for request: {}", addition);
             var percentageRestResponseDto = PercentageRestResponseDto.builder()
                     .status(response.getStatusCode().value())
                     .result(objectMapper.writeValueAsString(response.getBody()))

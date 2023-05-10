@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/v1/addition")
 public class CalculatorController {
@@ -45,6 +47,7 @@ public class CalculatorController {
   @PostMapping
   public ResponseEntity<AdditionDto> create(@RequestBody AdditionDto additionDto) throws JsonProcessingException {
     if (bucket.tryConsume(1)) {
+      log.info("starting CalculatorController.create with request: {}", additionDto);
       var addition = additionControllerMapper.map(additionDto);
       additionService.calculateAddition(addition);
       return ResponseEntity.ok().build();
@@ -57,6 +60,7 @@ public class CalculatorController {
   @GetMapping(params = { "page", "size" })
   public ResponseEntity<List<ExternalCallDto>> get(@RequestParam("page") Integer page,
                                                    @RequestParam("size") Integer size) {
+    log.info("starting CalculatorController.get with page: {} and size: {}", page, size);
     if (bucket.tryConsume(1)) {
       var response = additionService.getAdditions(page, size).stream()
               .map(additionControllerMapper::map)
