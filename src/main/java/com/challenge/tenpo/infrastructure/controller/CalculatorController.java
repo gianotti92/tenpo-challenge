@@ -35,7 +35,8 @@ public class CalculatorController {
     this.additionService = additionService;
     this.additionControllerMapper = additionControllerMapper;
 
-    Bandwidth limit = Bandwidth.simple(3, Duration.ofMinutes(1));
+    Refill refill = Refill.intervally(3, Duration.ofMinutes(1));
+    Bandwidth limit = Bandwidth.classic(3, refill);
     this.bucket = Bucket.builder()
             .addLimit(limit)
             .build();

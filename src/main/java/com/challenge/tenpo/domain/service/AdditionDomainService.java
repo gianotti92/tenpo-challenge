@@ -1,6 +1,5 @@
 package com.challenge.tenpo.domain.service;
 
-import com.challenge.tenpo.domain.model.Addition;
 import com.challenge.tenpo.domain.model.ExternalCall;
 import com.challenge.tenpo.domain.repository.ExternalCallRepository;
 import org.springframework.data.domain.Pageable;
@@ -10,8 +9,6 @@ import java.util.List;
 
 @Service
 public class AdditionDomainService {
-
-    public static final int ONE_HUNDRED = 100;
     
     private ExternalCallRepository additionRepository;
 

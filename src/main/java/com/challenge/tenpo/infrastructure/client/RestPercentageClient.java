@@ -58,6 +58,7 @@ public class RestPercentageClient implements PercentageClient {
     @SneakyThrows
     private ExternalCall getFromExternalClient(Addition addition) {
         var url = String.format(StringUtils.join(baseUrl, URL), addition.getFirstAddend(), addition.getSecondAddend());
+       
         ResponseEntity<PercentageRestResponseDto> response = null;
        
         try{
@@ -85,7 +86,7 @@ public class RestPercentageClient implements PercentageClient {
                             response.getStatusCode())).getMessage().substring(0, 99)))
                     .build();
 
-            lastResult.put(addition.getFirstAddend() + addition.getSecondAddend(), percentageRestResponseDto);
+            
 
             return ExternalCall.builder()
                     .result(objectMapper.writeValueAsString(percentageRestResponseDto))
