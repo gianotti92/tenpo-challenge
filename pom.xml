@@ -6,13 +6,16 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
+	
 	<groupId>com.challenge</groupId>
 	<artifactId>tenpo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tenpo</name>
 	<description>Challenge for tenpo finctech</description>
+	<packaging>jar</packaging>
+	
 	<properties>
 		<java.version>17</java.version>
 	</properties>
