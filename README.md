@@ -15,12 +15,45 @@ Para poder ver la coleccion de request disponibles debemos acceder a swagger den
 
 Si quisieramos revisar como quedan guardadas las externarCall dentro de la db de postgress, debemos crear una conexión a la db con nuestro cliente de preferencia. Las properties de conexion se encuentran en el proyecto dentro del application.properties.
 
+## curls de pruebas
+
+creación de external calls
+```
+curl --request POST \
+  --url http://localhost:8080/v1/addition \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"firstAddend" : 5,
+	"secondAddend": 5
+}'
+```
+
+lectura de historicos
+```
+curl --request GET \
+  --url 'http://localhost:8080/v1/addition?page=0&size=100'
+```
+
+
 # Otros datos
 Al realizar el desarrollo, cree una api que realiza el calculo en node js, como asi tambien utilicé una imagen ya existente en docker de postgres. 
 
 Link al repo de dockerhub con las imagenes: https://hub.docker.com/repositories/20191992
 
-Mdiante estas imagenes cree el docker compose para crear todo el ambiente
+Mediante estas imagenes cree el docker compose para crear todo el ambiente.
+
+Para realizar pruebas sobre la aplicación mock de cálculo, el request es: 
+
+```
+curl --request GET \
+  --url 'http://localhost:8081/calculate-percentage?a=5&b=5'
+```
+
+donde el parametro a y b son los numeros con los cuales se realiza el cálculo.
+
+
+
+
 
 
 
