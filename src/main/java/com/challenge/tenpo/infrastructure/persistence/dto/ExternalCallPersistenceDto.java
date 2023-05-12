@@ -1,5 +1,6 @@
 package com.challenge.tenpo.infrastructure.persistence.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,18 +21,19 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Schema(name = "tenpodb")
 @Table(name = "external_call")
 public class ExternalCallPersistenceDto {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "result")
+    @Column(name = "result", nullable = false, columnDefinition = "varchar(200)")
     private String result;
-    @Column(name = "http_code")
+    @Column(name = "http_code", nullable = false, columnDefinition = "int")
     private Integer httpCode;
 
-    @Column(name = "created")
+    @Column(name = "created", nullable = false, columnDefinition = "date")
     private LocalDateTime created;
     
 

@@ -1,6 +1,12 @@
 spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${db.schema}
+    hibernate:
+      ddl-auto: create
   datasource:
-    url: jdbc:postgresql://${db.host}:${db.port}/${db.name}?currentSchema=${db.schema}
+    url: jdbc:postgresql://${db.host}:${db.port}/${db.name}
     username: ${db.user}
     password: ${db.password}
     driver-class-name: org.postgresql.Driver

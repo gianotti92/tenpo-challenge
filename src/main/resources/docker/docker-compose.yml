@@ -1,15 +1,26 @@
-version: '3.9'
+version: "1"
 
 services:
-  db:
+  service-a:
+    image: 20191992/tenpo-challenge:5.0
+    ports:
+      - 8080:8080
+
+  service-b:
+    image: 20191992/mock-addition
+    ports:
+      - 8081:8081
+
+  postgres:
     image: postgres
-    container_name: my-postgres-db
-    restart: always
+    container_name: postgres
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
+      POSTGRES_DB: postgres
+      POSTGRES_SCHEMA: tenpodb
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - tenpo-db:/var/lib/postgresql/data
 
