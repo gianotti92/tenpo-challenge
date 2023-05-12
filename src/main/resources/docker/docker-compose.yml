@@ -2,7 +2,7 @@ version: "1"
 
 services:
   service-a:
-    image: 20191992/tenpo-challenge:6.0
+    image: 20191992/tenpo-challenge:7.0
     ports:
       - 8080:8080
 
