@@ -13,7 +13,14 @@ una vez instalado, debemos descargar el archivo https://github.com/gianotti92/te
 
 Para poder ver la coleccion de request disponibles debemos acceder a swagger dentro de algun navegador http://localhost:8080/swagger-ui/index.html, alli encontraremos dos request un post con una creacion una una external call y otro get para obtener un histórico.
 
-Si quisieramos revisar como quedan guardadas las externarCall dentro de la db de postgress, debemos crear una conexión a la db con nuestro cliente de preferencia. Las properties de conexion se encuentran en el proyecto dentro del application.properties,
+Si quisieramos revisar como quedan guardadas las externarCall dentro de la db de postgress, debemos crear una conexión a la db con nuestro cliente de preferencia. Las properties de conexion se encuentran en el proyecto dentro del application.properties.
+
+# Otros datos
+Al realizar el desarrollo, cree una api que realiza el calculo en node js, como asi tambien utilicé una imagen ya existente en docker de postgres. 
+
+Link al repo de dockerhub con las imagenes: https://hub.docker.com/repositories/20191992
+
+Mdiante estas imagenes cree el docker compose para crear todo el ambiente
 
 
 
