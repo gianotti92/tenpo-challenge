@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/addition")
+@RequestMapping("/v1/externalCall")
 public class CalculatorController {
 
   private AdditionService additionService;
