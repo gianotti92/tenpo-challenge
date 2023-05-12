@@ -20,7 +20,7 @@ Si quisieramos revisar como quedan guardadas las externarCall dentro de la db de
 creación de external calls
 ```
 curl --request POST \
-  --url http://localhost:8080/v1/addition \
+  --url http://localhost:8080/v1/externalCall \
   --header 'Content-Type: application/json' \
   --data '{
 	"firstAddend" : 5,
@@ -31,7 +31,7 @@ curl --request POST \
 lectura de historicos
 ```
 curl --request GET \
-  --url 'http://localhost:8080/v1/addition?page=0&size=100'
+  --url 'http://localhost:8080/v1/externalCall?page=0&size=100'
 ```
 
 
