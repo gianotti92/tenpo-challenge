@@ -11,14 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.awt.print.Pageable;
-import java.util.HashMap;
-import java.util.Map;
-
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,35 +25,29 @@ public class RestPercentageClientTest {
     
     private static final String MOCK_URL = "some-url";
     
-    private Map<Double, PercentageRestResponseDto> lastResult = new HashMap<>();
-    
     @Mock
     private RestTemplate restTemplate;
     
     @Mock
     private Addition addition;
     
-    @Mock
-    private ResponseEntity<PercentageRestResponseDto> mockResponse;
-    
-    
     @BeforeEach
     public void init() {
-        restPercentageClient = new RestPercentageClient(MOCK_URL, restTemplate, new ObjectMapper(), lastResult);
+        restPercentageClient = new RestPercentageClient(MOCK_URL, restTemplate, new ObjectMapper());
     }
     
     @Test
     public void given_valid_addition_existing_in_cache_when_get_calculation_the_response_will_be_ok() {
-        when(mockResponse.getBody()).thenReturn(PercentageRestResponseDto.builder().status(200).result("some-result").build());
+        var dto = PercentageRestResponseDto.builder().result("some-result").status(200).build();
         
-        when(mockResponse.getStatusCode()).thenReturn(HttpStatusCode.valueOf(200));
+        ResponseEntity<PercentageRestResponseDto> response = new ResponseEntity<>(dto, HttpStatus.OK);
         
         when(restTemplate.exchange(MOCK_URL + "/calculate-percentage?a=0.0&b=0.0", HttpMethod.GET, null, PercentageRestResponseDto.class))
-                .thenReturn(mockResponse);
+                .thenReturn(response);
         
-        var result = restPercentageClient.getExternalCall(addition);
+        var result = restPercentageClient.getExternalCall(addition, 11d);
 
-        Assertions.assertEquals("\"{\"result\":\"some-result\",\"status\":200}\"", result.getResult());
+        Assertions.assertEquals("{\"result\":\"some-result\",\"status\":200}", result.getResult());
         Assertions.assertEquals(200, result.getHttpCode());
     }
     

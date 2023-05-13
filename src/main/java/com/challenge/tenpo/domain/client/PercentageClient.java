@@ -5,6 +5,6 @@ import com.challenge.tenpo.domain.model.ExternalCall;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface PercentageClient {
-    ExternalCall getExternalCall(Addition addition);
+    ExternalCall getExternalCall(Addition addition, Double additionResult);
     
 }
