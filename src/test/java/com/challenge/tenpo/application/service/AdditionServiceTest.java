@@ -14,6 +14,7 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 
 @ExtendWith(MockitoExtension.class)
 public class AdditionServiceTest {
@@ -31,10 +32,9 @@ public class AdditionServiceTest {
     @Mock
     private Addition mockAddition;
     
-
     @Test
     public void given_valid_addition_when_calculate_then_addition_domain_service_will_be_called_ok() {
-        when(percentageClient.getExternalCall(mockAddition, anyDouble())).thenReturn(mockExternalCall);
+        when(percentageClient.getExternalCall(any(Addition.class), anyDouble())).thenReturn(mockExternalCall);
         when(additionDomainService.save(mockExternalCall)).thenReturn(mockExternalCall);
         
         additionService.calculateAddition(mockAddition);
