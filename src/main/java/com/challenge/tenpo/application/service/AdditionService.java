@@ -4,7 +4,6 @@ import com.challenge.tenpo.domain.client.PercentageClient;
 import com.challenge.tenpo.domain.model.Addition;
 import com.challenge.tenpo.domain.model.ExternalCall;
 import com.challenge.tenpo.domain.service.AdditionDomainService;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
